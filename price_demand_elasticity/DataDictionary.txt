@@ -1,0 +1,67 @@
+The dataset has some columns that are designed to suit the actual analysis and features of the Kaggle dataset (https://l1nq.com/v9kBX)
+
+FICTIONAL FEATURES:
+
+import pandas as pd
+import numpy as np
+
+# Crearte a empty dataframe
+df = pd.DataFrame(index=range(10000))
+
+num_rows = 10000
+
+# PURCHASECOD - code of each purchase
+# Create the feature  "purchasecod" 
+df['purchasecod'] = np.random.randint(10000000, 99999999, size=10000)
+
+# CODCLIENT - cliente code
+# Feature 'codclient'
+df['codclient'] = np.random.randint(1000000, 9999999, size=num_rows)
+num_repeated = int(0.37 * num_rows)
+repeated_values = np.random.choice(df['codclient'], size=num_repeated, replace=False)
+df.loc[np.random.choice(df.index, size=num_repeated, replace=False), 'codclient'] = np.random.choice(repeated_values, size=num_repeated, replace=True)
+
+# DATE_PURCHASE - dates of purchases
+# Create the feature "date_purchase" random between 2022-01-01 e 2024-06-30
+start_date = pd.to_datetime('2022-01-01')
+end_date = pd.to_datetime('2024-06-30')
+date_range = (end_date - start_date).days
+random_days = np.random.randint(0, date_range + 1, size=10000)
+df['date_purchase'] = start_date + pd.to_timedelta(random_days, unit='D')
+
+# SALES_CHANNEL - sales channels 
+# Create 'sales_channel'
+sales_channels = ['site', 'mob', 'store', 'mktplace', 'partners']
+num_random = int(0.63 * num_rows)
+num_repeated = num_rows - num_random
+random_sales_channels = np.random.choice(sales_channels, size=num_random, replace=True)
+repeated_sales_channels = np.random.choice(random_sales_channels, size=num_repeated, replace=True)
+combined_sales_channels = np.concatenate([random_sales_channels, repeated_sales_channels])
+np.random.shuffle(combined_sales_channels)
+
+
+# CODPROD - code of each product
+# dreate 'codprod'
+df['codprod'] = np.random.randint(100000, 999999, size=num_rows)
+num_repeated = int(0.37 * num_rows)
+repeated_values = np.random.choice(df['codprod'], size=num_repeated, replace=False)
+df.loc[np.random.choice(df.index, size=num_repeated, replace=False), 'codprod'] = np.random.choice(repeated_values, size=num_repeated, replace=True)
+
+
+
+REAL FEATURES
+
+The real columns are the first 10 thousand rows of Kaggle dataset 
+
+'price' - price in USD
+'category_name' - category of products
+'brand' - sold brands
+'disc_perc' - discount values (in %)
+'total' - amount paid with discount
+
+
+
+
+
+
+
